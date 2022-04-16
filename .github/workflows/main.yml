@@ -25,7 +25,6 @@ jobs:
         gpg --quiet --batch --yes --decrypt --passphrase="$SECRET_PASSPHRASE" \
         --output $HOME/secrets/secrets.tar secrets.tar.gpg
         tar xvf $HOME/secrets/secrets.tar
-        flutter build appbundle
         flutter build apk
       env:
         SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE }}
