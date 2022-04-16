@@ -2,7 +2,10 @@ name: CI/CD
 on:
   push:
     branches:
-      - development
+    - testing
+  pull_request:
+    branches:
+    - testing
 
 jobs:
 
@@ -30,8 +33,7 @@ jobs:
         SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE }}
 
 
-    - name: Deploy
-      if: (github.base_ref == 'master' && github.event_name == 'pull_request')
+    - name: Deploy to app distribution
       uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
       with:
         appId: ${{secrets.FIREBASE_ANDROID_APPID}}
@@ -39,4 +41,6 @@ jobs:
         groups: team_1
         release_notes: "a new version"
         file: build/app/outputs/flutter-apk/app-release.apk
+
+
         
