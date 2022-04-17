@@ -1,4 +1,4 @@
-package com.example.habitrush
+package com.habitrush
 
 import io.flutter.embedding.android.FlutterActivity
 
