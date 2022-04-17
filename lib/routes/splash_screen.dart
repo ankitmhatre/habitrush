@@ -19,17 +19,19 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
     _controller = AnimationController(vsync: this);
 
-    if (FirebaseAuth.instance.currentUser != null) {
-      // wrong call in wrong place!
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomePage()));
-    }
-  }
+    Future.delayed(const Duration(seconds: 2), () {
+      if (FirebaseAuth.instance.currentUser != null) {
+        // wrong call in wrong place!
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage()));
+      }
+    });
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    @override
+    void dispose() {
+      _controller.dispose();
+      super.dispose();
+    }
   }
 
   @override
@@ -50,8 +52,12 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                     context,
                     '/login',
                   );
+                  print("Hadshajkhdkjadk");
                 },
-                child: const Text("Login"))
+                child: const Text(
+                  "Login",
+                  style: TextStyle(fontSize: 40),
+                ))
           ],
         ),
       ),
