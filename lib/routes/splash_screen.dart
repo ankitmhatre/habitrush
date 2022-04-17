@@ -32,37 +32,35 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       _controller.dispose();
       super.dispose();
     }
-
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        body: Center(
-          child: ListView(
-            children: <Widget>[
-              Lottie.asset(
-                'assets/lottie_files/star_watch.json',
-              ),
-              const Center(
-                child: Text("HabitRush", style: TextStyle(fontSize: 48)),
-              ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      '/login',
-                    );
-                  },
-                  child: const Text("Login"))
-            ],
-          ),
-        ),
-      );
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      body: Center(
+        child: ListView(
+          children: <Widget>[
+            Lottie.asset(
+              'assets/lottie_files/star_watch.json',
+            ),
+            const Center(
+              child: Text("HabitRush", style: TextStyle(fontSize: 48)),
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(
+                    context,
+                    '/login',
+                  );
+                  print("Hadshajkhdkjadk");
+                },
+                child: const Text(
+                  "Login",
+                  style: TextStyle(fontSize: 40),
+                ))
+          ],
+        ),
+      ),
+    );
   }
 }
