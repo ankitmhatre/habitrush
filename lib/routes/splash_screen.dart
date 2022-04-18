@@ -52,7 +52,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                     context,
                     '/login',
                   );
-                  print("Hadshajkhdkjadk");
+                
                 },
                 child: const Text(
                   "Login",
