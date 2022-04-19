@@ -9,15 +9,18 @@
   <component name="ChangeListManager">
     <list default="true" id="04c231dc-f483-44d7-90cc-5e99ac5e6d72" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.github/workflows/main.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../.github/workflows/main.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/routes/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/routes/splash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/components/custom_card_componet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/components/custom_card_componet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/routes/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/routes/profile_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/ankit/.android/avd/Pixel_2_API_Tiramisu.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[8c4886e73ee3]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,22 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             await auth.signInWithCredential(credential);
 
         user = userCredential.user;
+
+        CollectionReference users =
+            FirebaseFirestore.instance.collection('users');
+
+        // Call the user's CollectionReference to add a new user
+        users
+            .doc(user?.uid)
+            .set({
+              'displayName': user?.displayName, // John Doe
+              'email': user?.email, // Stokes and Sons
+              'uid': user?.uid, // 42
+              'photoURL': user?.photoURL, // 42
+            }, SetOptions(merge: true))
+            .then((value) => print("User Added"))
+            .catchError((error) => print("Failed to add user: $error"));
+
         Navigator.pushReplacementNamed(context, '/home', arguments: user);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
