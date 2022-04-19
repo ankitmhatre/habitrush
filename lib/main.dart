@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:habitrush/routes/home_screen.dart';
 import 'package:habitrush/routes/login_screen.dart';
+import 'package:habitrush/routes/profile_screen.dart';
+import 'package:habitrush/routes/purchases_screen.dart';
 import 'package:habitrush/routes/splash_screen.dart';
 
 void main() async {
@@ -22,6 +24,10 @@ class MyApp extends StatelessWidget {
         '/splash': (context) => const SplashPage(),
         '/login': (context) => const LoginPage(),
         '/home': (context) => const HomePage(),
+        '/profile': (context) => const ProfilePage(),
+        '/purchases': (context) => const PurchasesPage(),
+        '/invite': (context) => const PurchasesPage(),
+        '/challenges': (context) => const PurchasesPage(),
       },
       theme: ThemeData(
         // This is the theme of your application.
