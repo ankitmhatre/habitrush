@@ -40,13 +40,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.amberAccent,
+        unselectedFontSize: 20,
+        unselectedIconTheme:
+            const IconThemeData(color: Colors.amberAccent, size: 40),
         selectedFontSize: 20,
         selectedIconTheme:
-            const IconThemeData(color: Colors.amberAccent, size: 40),
-        selectedItemColor: Colors.amberAccent,
+            const IconThemeData(color: Colors.deepOrange, size: 40),
+        selectedItemColor: Colors.deepOrange,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
 
-        backgroundColor: Colors.yellow,
         currentIndex: _selectedIndex, //New
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:habitrush/components/custom_card_componet.dart';
@@ -82,6 +84,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           "/challenges"),
                       const CustomCard("Purchase history",
                           "find about all your transactions", "/purchases"),
+                      GestureDetector(
+                        onTap: () => print('Emoty gesture'),
+                        child: Text("sign out"),
+                      ),
                     ],
                   ),
                 ),
