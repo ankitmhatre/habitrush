@@ -25,76 +25,79 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<User?>(
-        future: getSignedInUser(),
-        builder: ((context, AsyncSnapshot<User?> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else {
-            if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+      body: SafeArea(
+        child: FutureBuilder<User?>(
+          future: getSignedInUser(),
+          builder: ((context, AsyncSnapshot<User?> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
             } else {
-              return Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50.0),
-                        child: FadeInImage.assetNetwork(
-                            placeholder: "assets/images/profile_default.svg",
-                            image: "${snapshot.data!.photoURL}"),
-                      ),
-                      Center(
-                        child: (snapshot.data!.displayName != null)
-                            ? Text(
-                                "${snapshot.data!.displayName}",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 24.0),
-                              )
-                            : null,
-                      ),
-                      Center(
-                        child: (snapshot.data!.email != null)
-                            ? Text(
-                                "${snapshot.data!.email}",
-                                style: const TextStyle(
-                                    fontFamily: "Poppins",
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12.0),
-                              )
-                            : null,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                        child: const Divider(
-                          height: 2.0,
-                          color: Colors.orangeAccent,
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                return Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(50.0),
+                          child: FadeInImage.assetNetwork(
+                              placeholder: "assets/images/profile_default.svg",
+                              image: "${snapshot.data!.photoURL}"),
                         ),
-                      ),
-                      const CustomCard(
-                          "Invite and Earn",
-                          "Earn rush coins for every invite claimed.",
-                          "/invite"),
-                      const CustomCard(
-                          "Completed challenges",
-                          "Check all the previous challenges you completed",
-                          "/challenges"),
-                      const CustomCard("Purchase history",
-                          "find about all your transactions", "/purchases"),
-                      GestureDetector(
-                        onTap: () => print('Emoty gesture'),
-                        child: Text("sign out"),
-                      ),
-                    ],
+                        Center(
+                          child: (snapshot.data!.displayName != null)
+                              ? Text(
+                                  "${snapshot.data!.displayName}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 24.0),
+                                )
+                              : null,
+                        ),
+                        Center(
+                          child: (snapshot.data!.email != null)
+                              ? Text(
+                                  "${snapshot.data!.email}",
+                                  style: const TextStyle(
+                                      fontFamily: "Poppins",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12.0),
+                                )
+                              : null,
+                        ),
+                        Container(
+                          margin:
+                              const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                          child: const Divider(
+                            height: 2.0,
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
+                        const CustomCard(
+                            "Invite and Earn",
+                            "Earn rush coins for every invite claimed.",
+                            "/invite"),
+                        const CustomCard(
+                            "Completed challenges",
+                            "Check all the previous challenges you completed",
+                            "/challenges"),
+                        const CustomCard("Purchase history",
+                            "find about all your transactions", "/purchases"),
+                        GestureDetector(
+                          onTap: () => print('Emoty gesture'),
+                          child: Text("sign out"),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            } // snapshot.data  :- get your object which is pass from your downloadData() function
-          }
-        }),
+                );
+              } // snapshot.data  :- get your object which is pass from your downloadData() function
+            }
+          }),
+        ),
       ),
     );
   }

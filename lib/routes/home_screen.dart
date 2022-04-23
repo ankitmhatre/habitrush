@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habitrush/routes/coins_screen.dart';
 import 'package:habitrush/routes/profile_screen.dart';
 import 'package:habitrush/routes/public_challenges_screen.dart';
 import 'package:lottie/lottie.dart';
@@ -23,10 +24,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       Icons.chat,
       size: 150,
     ),
-    Icon(
-      Icons.camera,
-      size: 150,
-    ),
+    CoinsPage(),
     ProfilePage()
   ];
 

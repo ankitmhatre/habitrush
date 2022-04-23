@@ -51,7 +51,7 @@ class _InvitePageState extends State<InvitePage> with TickerProviderStateMixin {
             Row(
               children: const <Widget>[
                 TwoLineNumberBoxCard("8", "invited"),
-                TwoLineNumberBoxCard("40", "coins earned")
+                TwoLineNumberBoxCard("40", "rush coins")
               ],
             ),
             const SizedBox(height: 30),
