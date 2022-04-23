@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habitrush/routes/coins_screen.dart';
+import 'package:habitrush/routes/habits_screen.dart';
 import 'package:habitrush/routes/profile_screen.dart';
 import 'package:habitrush/routes/public_challenges_screen.dart';
 import 'package:habitrush/routes/store_screen.dart';
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int _selectedIndex = 0;
 
   static const List<Widget> _pages = <Widget>[
-    PublicChallengesPage(),
+    HabitsPage(),
     Icon(
       Icons.camera,
       size: 150,

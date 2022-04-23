@@ -57,7 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             height: 65,
                             child: CircularProgressIndicator(),
                           ),
-                          radius: 50,
+                          radius: 36,
                           backgroundColor: Colors.transparent,
                           borderWidth: 1,
 //                  initialsText: Text(
