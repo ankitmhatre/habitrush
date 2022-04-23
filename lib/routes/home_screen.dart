@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habitrush/routes/coins_screen.dart';
 import 'package:habitrush/routes/profile_screen.dart';
 import 'package:habitrush/routes/public_challenges_screen.dart';
 import 'package:lottie/lottie.dart';
@@ -23,10 +24,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       Icons.chat,
       size: 150,
     ),
-    Icon(
-      Icons.camera,
-      size: 150,
-    ),
+    CoinsPage(),
     ProfilePage()
   ];
 
@@ -40,23 +38,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 20,
+        unselectedItemColor: Colors.amberAccent,
+        unselectedFontSize: 15,
+        unselectedIconTheme:
+            const IconThemeData(color: Colors.amberAccent, size: 32),
+        selectedFontSize: 15,
         selectedIconTheme:
-            const IconThemeData(color: Colors.amberAccent, size: 40),
-        selectedItemColor: Colors.amberAccent,
+            const IconThemeData(color: Colors.deepOrange, size: 32),
+        selectedItemColor: Colors.deepOrange,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
 
-        backgroundColor: Colors.yellow,
         currentIndex: _selectedIndex, //New
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.public),
-            label: 'Public',
+            label: 'Habits',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.lock),
-            label: 'Private',
+            label: 'Challenges',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.store),
