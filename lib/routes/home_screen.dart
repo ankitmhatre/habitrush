@@ -39,12 +39,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.amberAccent,
-        unselectedFontSize: 20,
+        unselectedFontSize: 15,
         unselectedIconTheme:
-            const IconThemeData(color: Colors.amberAccent, size: 40),
-        selectedFontSize: 20,
+            const IconThemeData(color: Colors.amberAccent, size: 32),
+        selectedFontSize: 15,
         selectedIconTheme:
-            const IconThemeData(color: Colors.deepOrange, size: 40),
+            const IconThemeData(color: Colors.deepOrange, size: 32),
         selectedItemColor: Colors.deepOrange,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
 
@@ -53,11 +53,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.public),
-            label: 'Public',
+            label: 'Habits',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.lock),
-            label: 'Private',
+            label: 'Challenges',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.store),
