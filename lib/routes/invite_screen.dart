@@ -5,15 +5,14 @@ import 'package:habitrush/components/transaction_card.dart';
 import 'package:habitrush/routes/home_screen.dart';
 import 'package:lottie/lottie.dart';
 
-class PurchasesPage extends StatefulWidget {
-  const PurchasesPage({Key? key}) : super(key: key);
+class InvitePage extends StatefulWidget {
+  const InvitePage({Key? key}) : super(key: key);
 
   @override
-  _PurchasesPageState createState() => _PurchasesPageState();
+  _InvitePageState createState() => _InvitePageState();
 }
 
-class _PurchasesPageState extends State<PurchasesPage>
-    with TickerProviderStateMixin {
+class _InvitePageState extends State<InvitePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +21,7 @@ class _PurchasesPageState extends State<PurchasesPage>
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
-          "Transactions",
+          "Invite",
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
         leading: IconButton(
