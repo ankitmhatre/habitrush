@@ -22,6 +22,11 @@ class _ProfilePageState extends State<ProfilePage> {
     // here you write the codes to input the data into firestore
   }
 
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacementNamed(context, "/splash");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +92,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         const CustomCard("Purchase history",
                             "find about all your transactions", "/purchases"),
                         GestureDetector(
-                          onTap: () => print('Emoty gesture'),
+                          onTap: () => _signOut(),
                           child: Text("sign out"),
                         ),
                       ],

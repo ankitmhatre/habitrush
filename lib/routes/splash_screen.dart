@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:habitrush/routes/home_screen.dart';
+import 'package:habitrush/routes/login_screen.dart';
 import 'package:lottie/lottie.dart';
 
 class SplashPage extends StatefulWidget {
@@ -19,11 +20,14 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
     _controller = AnimationController(vsync: this);
 
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 3), () {
       if (FirebaseAuth.instance.currentUser != null) {
         // wrong call in wrong place!
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomePage()));
+      } else {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const LoginPage()));
       }
     });
 
@@ -46,18 +50,6 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
             const Center(
               child: Text("HabitRush", style: TextStyle(fontSize: 48)),
             ),
-            TextButton(
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                    context,
-                    '/login',
-                  );
-                
-                },
-                child: const Text(
-                  "Login",
-                  style: TextStyle(fontSize: 40),
-                ))
           ],
         ),
       ),
