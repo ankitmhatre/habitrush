@@ -56,7 +56,7 @@ class _CoinsPageState extends State<CoinsPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
+                    children: const <Widget>[
                       Text("data"),
                       CoinCard(
                         "Total",

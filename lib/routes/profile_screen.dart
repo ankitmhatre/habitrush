@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:habitrush/components/custom_card_componet.dart';
@@ -22,6 +23,11 @@ class _ProfilePageState extends State<ProfilePage> {
     // here you write the codes to input the data into firestore
   }
 
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacementNamed(context, "/splash");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,11 +47,29 @@ class _ProfilePageState extends State<ProfilePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(50.0),
-                          child: FadeInImage.assetNetwork(
-                              placeholder: "assets/images/profile_default.svg",
-                              image: "${snapshot.data!.photoURL}"),
+                        CircularProfileAvatar(
+                          "${snapshot.data!.photoURL}",
+                          errorWidget: (context, url, error) => Container(
+                            child: Icon(Icons.error),
+                          ),
+                          placeHolder: (context, url) => Container(
+                            width: 65,
+                            height: 65,
+                            child: CircularProgressIndicator(),
+                          ),
+                          radius: 36,
+                          backgroundColor: Colors.transparent,
+                          borderWidth: 1,
+//                  initialsText: Text(
+//                    "AD",
+//                    style: TextStyle(fontSize: 40, color: Colors.white),
+//                  ),
+                          borderColor: Colors.yellowAccent,
+                          imageFit: BoxFit.fitHeight,
+                          elevation: 5.0,
+
+                          cacheImage: true,
+                          showInitialTextAbovePicture: false,
                         ),
                         Center(
                           child: (snapshot.data!.displayName != null)
@@ -87,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         const CustomCard("Purchase history",
                             "find about all your transactions", "/purchases"),
                         GestureDetector(
-                          onTap: () => print('Emoty gesture'),
+                          onTap: () => _signOut(),
                           child: Text("sign out"),
                         ),
                       ],

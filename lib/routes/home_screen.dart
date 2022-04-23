@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:habitrush/routes/coins_screen.dart';
+import 'package:habitrush/routes/habits_screen.dart';
 import 'package:habitrush/routes/profile_screen.dart';
 import 'package:habitrush/routes/public_challenges_screen.dart';
+import 'package:habitrush/routes/store_screen.dart';
 import 'package:lottie/lottie.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,15 +17,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int _selectedIndex = 0;
 
   static const List<Widget> _pages = <Widget>[
-    PublicChallengesPage(),
+    HabitsPage(),
     Icon(
       Icons.camera,
       size: 150,
     ),
-    Icon(
-      Icons.chat,
-      size: 150,
-    ),
+    StorePage(),
     CoinsPage(),
     ProfilePage()
   ];
@@ -38,13 +37,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.amberAccent,
-        unselectedFontSize: 15,
+
         unselectedIconTheme:
-            const IconThemeData(color: Colors.amberAccent, size: 32),
-        selectedFontSize: 15,
+            const IconThemeData(color: Colors.amberAccent, size: 24),
+        selectedFontSize: 12,
         selectedIconTheme:
-            const IconThemeData(color: Colors.deepOrange, size: 32),
+            const IconThemeData(color: Colors.deepOrange, size: 24),
         selectedItemColor: Colors.deepOrange,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
 
