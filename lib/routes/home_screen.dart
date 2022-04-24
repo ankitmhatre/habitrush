@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:habitrush/routes/challenges_screen.dart';
 import 'package:habitrush/routes/coins_screen.dart';
 import 'package:habitrush/routes/habits_screen.dart';
 import 'package:habitrush/routes/profile_screen.dart';
 import 'package:habitrush/routes/public_challenges_screen.dart';
 import 'package:habitrush/routes/store_screen.dart';
+import 'package:habitrush/utilities/colors.dart';
 import 'package:lottie/lottie.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,14 +16,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   static const List<Widget> _pages = <Widget>[
+    ChallengesPage(),
     HabitsPage(),
-    Icon(
-      Icons.camera,
-      size: 150,
-    ),
     StorePage(),
     CoinsPage(),
     ProfilePage()
@@ -39,26 +38,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       child: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          unselectedItemColor: Colors.amberAccent,
-
+          unselectedItemColor: Colors.grey,
+          unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
           unselectedIconTheme:
-              const IconThemeData(color: Colors.amberAccent, size: 24),
+              const IconThemeData(color: Colors.grey, size: 36),
           selectedFontSize: 12,
-          selectedIconTheme:
-              const IconThemeData(color: Colors.deepOrange, size: 24),
-          selectedItemColor: Colors.deepOrange,
+          selectedIconTheme: const IconThemeData(color: rushYellow, size: 36),
+          selectedItemColor: rushYellow,
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
 
           currentIndex: _selectedIndex, //New
           onTap: _onItemTapped,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.public),
-              label: 'Habits',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.lock),
               label: 'Challenges',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.public),
+              label: 'Habits',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.store),

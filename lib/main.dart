@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:habitrush/routes/challenges_screen.dart';
+import 'package:habitrush/routes/completeschallenges_screen.dart';
 import 'package:habitrush/routes/habit/create_habit_screen.dart';
 import 'package:habitrush/routes/home_screen.dart';
 import 'package:habitrush/routes/invite_screen.dart';
