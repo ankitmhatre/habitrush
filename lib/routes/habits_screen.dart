@@ -39,6 +39,7 @@ class _HabitsPageState extends State<HabitsPage> {
                 color: Colors.black,
               ),
               onPressed: () {
+                Navigator.pushNamed(context, '/createHabit');
                 // do something
               },
             )
