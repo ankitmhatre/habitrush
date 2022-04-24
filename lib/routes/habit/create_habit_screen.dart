@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -11,6 +12,7 @@ import 'package:habitrush/extra/demo_toggle_buttons.dart';
 import 'package:habitrush/routes/home_screen.dart';
 import 'package:habitrush/utilities/colors.dart';
 import 'package:lottie/lottie.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class CreateHabitPage extends StatefulWidget {
   const CreateHabitPage({Key? key}) : super(key: key);
@@ -21,6 +23,18 @@ class CreateHabitPage extends StatefulWidget {
 
 class _CreateHabitPageState extends State<CreateHabitPage> {
   List<bool> isSelected = [true, false, false, false];
+
+  final RoundedLoadingButtonController _btnController1 =
+      RoundedLoadingButtonController();
+
+  void _doSomething(RoundedLoadingButtonController controller) async {
+    Timer(Duration(seconds: 3), () {
+      controller.error();
+      Timer(Duration(seconds: 2), () {
+        controller.reset();
+      });
+    });
+  }
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -132,19 +146,22 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
                             inputKey: "habitNotes"),
 
                         Container(
-                          decoration: BoxDecoration(
+                          margin: EdgeInsets.symmetric(vertical: 18),
+                          child: RoundedLoadingButton(
+                            borderRadius: 10,
                             color: rushYellow,
-                            borderRadius: BorderRadius.circular(10),
+                            successColor: Colors.green,
+                            successIcon: Icons.check,
+                            failedIcon: Icons.close,
+                            child: Text(
+                              "Go for it!",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800, fontSize: 18),
+                            ),
+                            controller: _btnController1,
+                            onPressed: () => _doSomething(_btnController1),
                           ),
-                          margin: EdgeInsets.only(top: 24, bottom: 15),
-                          height: 50,
-                          child: Center(
-                              child: Text(
-                            "Go for it!",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800, fontSize: 18),
-                          )),
-                        )
+                        ),
                       ],
                     ),
                   ),
