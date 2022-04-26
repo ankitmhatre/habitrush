@@ -73,12 +73,12 @@ class _GrayedFormWidgetState extends State<GrayedFormWidget> {
               controller: controller,
               cursorColor: Colors.deepOrange,
               style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: hint,
                 hintStyle: TextStyle(
-                    color: Colors.black54, fontWeight: FontWeight.w700),
+                    color: Colors.black54, fontWeight: FontWeight.w800),
               ),
             ),
           ),
