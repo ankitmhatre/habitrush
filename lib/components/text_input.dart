@@ -56,12 +56,13 @@ class TextInputWidget extends StatefulWidget {
   String hint;
   String initialText;
   String inputKey;
-
+  TextInputType? type;
   TextInputWidget(
       {Key? key,
       required this.hint,
       required this.initialText,
-      required this.inputKey})
+      required this.inputKey,
+      this.type})
       : super(key: key);
 
   @override
@@ -74,6 +75,7 @@ class _TextInputWidgetState extends State<TextInputWidget> {
   String hint = "";
   String initialText = "";
   String inputKey = "";
+  TextInputType? type;
   @override
   void dispose() {
     super.dispose();
@@ -86,7 +88,9 @@ class _TextInputWidgetState extends State<TextInputWidget> {
 
     hint = widget.hint;
     initialText = widget.initialText;
+    controller.text = initialText;
     inputKey = widget.inputKey;
+    type = widget.type;
   }
 
   void click() {
@@ -103,15 +107,19 @@ class _TextInputWidgetState extends State<TextInputWidget> {
         ),
         color: const Color.fromARGB(255, 232, 232, 232),
       ),
-      child: TextField(
-        controller: controller,
-        cursorColor: Colors.deepOrange,
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: hint,
-          hintStyle:
-              TextStyle(color: Colors.black54, fontWeight: FontWeight.w700),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: TextField(
+          keyboardType: type,
+          controller: controller,
+          cursorColor: Colors.deepOrange,
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: hint,
+            hintStyle:
+                TextStyle(color: Colors.black54, fontWeight: FontWeight.w700),
+          ),
         ),
       ),
     );
