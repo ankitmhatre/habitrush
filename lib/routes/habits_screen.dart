@@ -58,7 +58,9 @@ class _HabitsPageState extends State<HabitsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: InkWell(
                     child: GestureDetector(
-                      child: Icon(Icons.add),
+                      child: Row(
+                        children: [Icon(Icons.add), Text("create")],
+                      ),
                       onTap: () {
                         Navigator.pushNamed(context, '/createHabit');
                       },
