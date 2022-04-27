@@ -57,11 +57,13 @@ class TextInputWidget extends StatefulWidget {
   String initialText;
   String inputKey;
   TextInputType? type;
+  TextEditingController? textInputController;
   TextInputWidget(
       {Key? key,
       required this.hint,
       required this.initialText,
       required this.inputKey,
+      this.textInputController,
       this.type})
       : super(key: key);
 
@@ -70,25 +72,28 @@ class TextInputWidget extends StatefulWidget {
 }
 
 class _TextInputWidgetState extends State<TextInputWidget> {
-  final controller = TextEditingController();
   String title = "";
   String hint = "";
   String initialText = "";
   String inputKey = "";
   TextInputType? type;
+  TextEditingController textInputController = TextEditingController();
   @override
   void dispose() {
     super.dispose();
-    controller.dispose();
+
+    textInputController.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-
+    if (widget.textInputController != null) {
+      textInputController = widget.textInputController!;
+    }
     hint = widget.hint;
     initialText = widget.initialText;
-    controller.text = initialText;
+    textInputController.text = initialText;
     inputKey = widget.inputKey;
     type = widget.type;
   }
@@ -111,7 +116,7 @@ class _TextInputWidgetState extends State<TextInputWidget> {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: TextField(
           keyboardType: type,
-          controller: controller,
+          controller: textInputController,
           cursorColor: Colors.deepOrange,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800),
           decoration: InputDecoration(
