@@ -11,6 +11,7 @@ import 'package:habitrush/components/custom_card_componet.dart';
 import 'package:habitrush/components/store_item_list.dart';
 import 'package:habitrush/models/habit_model.dart';
 import 'package:habitrush/routes/home_screen.dart';
+import 'package:habitrush/utilities/colors.dart';
 import 'package:lottie/lottie.dart';
 
 class HabitsPage extends StatefulWidget {
@@ -54,17 +55,20 @@ class _HabitsPageState extends State<HabitsPage> {
             elevation: 0,
             backgroundColor: Colors.transparent,
             actions: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: InkWell(
-                    child: GestureDetector(
+              Container(
+                child: InkWell(
+                  splashColor: rushYellow,
+                  radius: 50,
+                  onTap: () {
+                    Navigator.pushNamed(context, '/createHabit')
+                        .then((_) => setState(() {}));
+                  },
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Row(
                         children: [Icon(Icons.add), Text("create")],
                       ),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/createHabit');
-                      },
                     ),
                   ),
                 ),
