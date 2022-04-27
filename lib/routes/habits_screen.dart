@@ -35,6 +35,7 @@ class _HabitsPageState extends State<HabitsPage> {
 
     // Call the user's CollectionReference to add a new user
     var allhabits = await habits.get();
+    print(allhabits);
     var allHabitsMap =
         allhabits.docs.map((e) => Habit.fromDocument(e)).toList();
 
@@ -112,7 +113,7 @@ class _HabitsPageState extends State<HabitsPage> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          "🔥${snapshot.data![index].habitStreak}",
+                                          "🔥${snapshot.data![index].habitNotes}",
                                         ),
                                       ),
                                     ],
