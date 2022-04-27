@@ -157,13 +157,12 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
     };
 
     try {
+      var habitId = await habits.doc().id;
+      newhabitDocument['habitId'] = habitId;
       var habitAddResponse = await habits
-          .add(newhabitDocument)
-          .timeout(Duration(seconds: 7))
-          .then((value) => {
-                habits.doc(value.id).update({"habitId": value.id})
-              })
-          .catchError((error) => print("Failed to create hbait: $error"));
+          .doc(habitId)
+          .set(newhabitDocument)
+          .timeout(Duration(seconds: 7));
 
       controller.success();
       Timer(Duration(seconds: 2), () {

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:habitrush/routes/completeschallenges_screen.dart';
 import 'package:habitrush/routes/habit/create_habit_screen.dart';
@@ -8,10 +11,23 @@ import 'package:habitrush/routes/login_screen.dart';
 import 'package:habitrush/routes/profile_screen.dart';
 import 'package:habitrush/routes/purchases_screen.dart';
 import 'package:habitrush/routes/splash_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+Future<void> _messageHandler(RemoteMessage message) async {
+  print('onMes_BackgroundMessage  ${message.data}');
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  // FirebaseFirestore.instance.useFirestoreEmulator("192.168.1.222", 8080);
+  FirebaseMessaging.onBackgroundMessage(_messageHandler);
+  FirebaseMessaging.onMessage.listen(_messageHandler);
+
+  FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    print('onMessageAppOpened ${message.data}');
+  });
   runApp(const MyApp());
 }
 

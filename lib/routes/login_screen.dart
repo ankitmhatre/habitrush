@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_signin_button/button_view.dart';
@@ -18,6 +19,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   Future<User?> _handleSignIn({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
+
     User? user;
 
     final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -34,14 +36,15 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         idToken: googleSignInAuthentication.idToken,
       );
 
+      final fcmToken = await FirebaseMessaging.instance.getToken();
       try {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
 
         user = userCredential.user;
+        var firestoreInstance = FirebaseFirestore.instance;
 
-        CollectionReference users =
-            FirebaseFirestore.instance.collection('users');
+        CollectionReference users = firestoreInstance.collection('users');
 
         // Call the user's CollectionReference to add a new user
         users
@@ -50,7 +53,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               'displayName': user?.displayName, // John Doe
               'email': user?.email, // Stokes and Sons
               'uid': user?.uid, // 42
-              'photoURL': user?.photoURL, // 42
+              'photoURL': user?.photoURL,
+              'token': fcmToken // 42
             }, SetOptions(merge: true))
             .then((value) => print("User Added"))
             .catchError((error) => print("Failed to add user: $error"));
