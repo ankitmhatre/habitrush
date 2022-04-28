@@ -38,7 +38,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
   bool isLoading = false;
   String isLoadingStatus = "Creating your customized habit";
   List<String> iconList = ["Everyday", "Every x days", "Weekly", "Monthly"];
-  List<String> _remindMeAtList = [];
+  List<DateTime> _remindMeAtList = [DateTime.now()];
   DateTime startDate = DateTime.now();
   List<String> daysOFWeek = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
   List<bool> selectedDaysOfWeek = [
@@ -147,12 +147,15 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
           .toList();
     } else {}
 
+//habitNameTextController.text
     var newhabitDocument = {
       "habitName": habitNameTextController.text,
       "habitReminderFrequency": iconList[isSelected.indexOf(true)],
       "habitReminderFrequencyDays": reminderFrequencyDays,
       "habitNotes": notesTextController.text,
-      "habitRemindAt": _remindMeAtList.toList(),
+      "habitRemindAt": _remindMeAtList
+          .map((e) => DateFormat("HH:mm").format(e.toUtc()))
+          .toList(),
       "habitStartDate": startDate,
     };
 
@@ -545,7 +548,8 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
                                     Expanded(
                                         flex: 8,
                                         child: Text(
-                                          _remindMeAtList[index],
+                                          DateFormat("h:mma")
+                                              .format(_remindMeAtList[index]),
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700),
                                         )),
@@ -583,9 +587,10 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
                               showTitleActions: true, onConfirm: (date) {
                             String confirmedTime =
                                 DateFormat("h:mma").format(date);
+                            //var newDate = "${date.hour}${date.minute}";
 
                             setState(() {
-                              _remindMeAtList.add(confirmedTime);
+                              _remindMeAtList.add(date);
                             });
                           }, currentTime: DateTime.now());
 
