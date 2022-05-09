@@ -21,7 +21,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  // FirebaseFirestore.instance.useFirestoreEmulator("192.168.1.203", 8080);
+  FirebaseFirestore.instance.useFirestoreEmulator("192.168.1.203", 8080);
   FirebaseMessaging.onBackgroundMessage(_messageHandler);
   FirebaseMessaging.onMessage.listen(_messageHandler);
 

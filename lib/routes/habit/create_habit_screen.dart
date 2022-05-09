@@ -29,6 +29,7 @@ class CreateHabitPage extends StatefulWidget {
 
 class _CreateHabitPageState extends State<CreateHabitPage> {
   final TextEditingController habitNameTextController = TextEditingController();
+
   final TextEditingController everyXDaysTextController =
       TextEditingController();
   final TextEditingController notesTextController = TextEditingController();
@@ -38,8 +39,8 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
   bool isLoading = false;
   String isLoadingStatus = "Creating your customized habit";
   List<String> iconList = ["Everyday", "Every x days", "Weekly", "Monthly"];
-  List<DateTime> _remindMeAtList = [DateTime.now()];
-  DateTime startDate = DateTime.now();
+  List<DateTime> _remindMeAtList = [DateTime.now().toUtc()];
+  DateTime startDate = DateTime.now().toUtc();
   List<String> daysOFWeek = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
   List<bool> selectedDaysOfWeek = [
     true,
@@ -145,18 +146,39 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
       reminderFrequencyDays = daysOFWeek
           .where((day) => (selectedDaysOfWeek[daysOFWeek.indexOf(day)]))
           .toList();
-    } else {}
+    } else if (isSelected.indexOf(true) == 3) {
+      reminderFrequencyDays = daysOfMonth
+          .where((day) => (selectedDaysOfMonth[daysOfMonth.indexOf(day)]))
+          .toList();
+    }
+
+    DateTime dateTime = DateTime.now();
+
+    print(dateTime.timeZoneOffset);
+    print(dateTime);
+    print(dateTime.timeZoneName);
+
+    print("_remindMeAtList ${_remindMeAtList}");
+    print("startDate ${startDate}");
 
 //habitNameTextController.text
     var newhabitDocument = {
+      "habitCreatedOn": FieldValue.serverTimestamp(),
       "habitName": habitNameTextController.text,
       "habitReminderFrequency": iconList[isSelected.indexOf(true)],
       "habitReminderFrequencyDays": reminderFrequencyDays,
       "habitNotes": notesTextController.text,
+      "habitLastCompletedAtDate": 0,
+      "habitCreatedTimeOffset": {
+        "n": dateTime.timeZoneOffset.isNegative,
+        "m": dateTime.timeZoneOffset.inMinutes,
+      },
       "habitRemindAt": _remindMeAtList
-          .map((e) => DateFormat("HH:mm").format(e.toUtc()))
+          .map((e) => DateFormat("HH:mm").format(e.toLocal()))
           .toList(),
-      "habitStartDate": startDate,
+      "habitStartDate": startDate.toUtc(),
+      "archived": false,
+      "active": true
     };
 
     try {
@@ -190,7 +212,9 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
 
   @override
   void initState() {
-    startDateTextController.text = DateFormat("MMMM dd").format(startDate);
+    startDateTextController.text =
+        DateFormat("MMMM dd").format(startDate.toLocal());
+    habitNameTextController.text = "Test habit";
     super.initState();
   }
 
@@ -548,8 +572,8 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
                                     Expanded(
                                         flex: 8,
                                         child: Text(
-                                          DateFormat("h:mma")
-                                              .format(_remindMeAtList[index]),
+                                          DateFormat("h:mm a").format(
+                                              _remindMeAtList[index].toLocal()),
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700),
                                         )),
@@ -585,12 +609,8 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
                                     TextStyle(color: black, fontSize: 16),
                               ),
                               showTitleActions: true, onConfirm: (date) {
-                            String confirmedTime =
-                                DateFormat("h:mma").format(date);
-                            //var newDate = "${date.hour}${date.minute}";
-
                             setState(() {
-                              _remindMeAtList.add(date);
+                              _remindMeAtList.add(date.toUtc());
                             });
                           }, currentTime: DateTime.now());
 
@@ -659,9 +679,10 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
                                 date.timeZoneOffset.inHours.toString());
                           }, onConfirm: (date) {
                             setState(() {
-                              startDate = date;
+                              startDate = date.toUtc();
                               startDateTextController.text =
-                                  DateFormat("MMMM dd").format(date);
+                                  DateFormat("MMMM dd yyy")
+                                      .format(startDate.toLocal());
                             });
                           },
                               currentTime: DateTime.now(),
