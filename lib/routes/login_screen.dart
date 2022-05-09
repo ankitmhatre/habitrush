@@ -54,7 +54,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               'email': user?.email, // Stokes and Sons
               'uid': user?.uid, // 42
               'photoURL': user?.photoURL,
-              'token': fcmToken // 42
+              'token': FieldValue.arrayUnion([fcmToken]),
+              // 42,
+              'active': true
             }, SetOptions(merge: true))
             .then((value) => print("User Added"))
             .catchError((error) => print("Failed to add user: $error"));
