@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:objectbox/objectbox.dart';
 
+@Entity()
 class Habit {
-  final String habitName;
-  final String habitId;
-  final String habitNotes;
+  int id;
+
+  String habitName;
+  String habitId;
+  String habitNotes;
 
   // final String email;
   // final String name;
@@ -11,22 +15,32 @@ class Habit {
   // final String profilePictureUrl;
   // final Timestamp createdAt;
 
-  const Habit(this.habitName, this.habitId, this.habitNotes
-      //  this.email,
-      //   this.name,
-      //   this.phoneNumber,
-      //     this.profilePictureUrl,
-      //this.createdAt
-      );
+//this.id = 0,
+
+  Habit(
+      {this.id = 0,
+      required this.habitName,
+      required this.habitId,
+      required this.habitNotes});
+
+  // const Habit(this.habitName, this.habitId, this.habitNotes
+  //     //  this.email,
+  //     //   this.name,
+  //     //   this.phoneNumber,
+  //     //     this.profilePictureUrl,
+  //     //this.createdAt
+  //     );
 
   factory Habit.fromDocument(DocumentSnapshot document) {
     return Habit(
-        document['habitName'], document['habitId'], document['habitNotes']
-        // document['email'],
-        // document['name'],
-        // document['phoneNumber'],
-        // document['profilePictureUrl'],
-        //document['createdAt']
-        );
+        habitId: document['habitId'],
+        habitName: document['habitName'],
+        habitNotes: document['habitNotes']);
+    // document['habitName'], document['habitId'], document['habitNotes']
+    // // document['email'],
+    // // document['name'],
+    // // document['phoneNumber'],
+    // // document['profilePictureUrl'],
+    // //document['createdAt']
   }
 }
