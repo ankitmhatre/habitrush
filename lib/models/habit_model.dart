@@ -1,40 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:habitrush/models/habit_timeOffset.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-
-//
-//     "habitRemindAt": _remindMeAtList
-//         .map((e) => DateFormat("HH:mm").format(e.toLocal()))
-//         .toList(),
-
 class Habit {
-  //system
   int id;
-
-//newly created
-  Timestamp habitCreatedOn;
-  String habitReminderFrequency;
-  Timestamp habitLastCompletedAtDate;
-  List<HabitOffset> habitCreatedTimeOffset;
-  bool active;
-  bool archive;
-  Timestamp habitStartDate;
-  List<String> habitRemindAt;
-
-//existing
   String habitName;
   String habitId;
   String habitNotes;
-
-  // final String email;
-  // final String name;
-  // final String phoneNumber;
-  // final String profilePictureUrl;
-  // final Timestamp createdAt;
-
-//this.id = 0,
+  @Property(type: PropertyType.date)
+  DateTime habitCreatedOn;
+  String habitReminderFrequency;
+  @Property(type: PropertyType.date)
+  DateTime? habitLastCompletedAtDate;
+  bool habitCreatedTimeOffset_n;
+  int habitCreatedTimeOffset_m;
+  bool active;
+  bool archive;
+  @Property(type: PropertyType.date)
+  DateTime habitStartDate;
+  List<String> habitRemindAt;
 
   Habit({
     this.id = 0,
@@ -43,12 +27,13 @@ class Habit {
     required this.habitNotes,
     required this.habitCreatedOn,
     required this.habitReminderFrequency,
-    required this.habitLastCompletedAtDate,
-    required this.habitCreatedTimeOffset,
+    required this.habitCreatedTimeOffset_n,
+    required this.habitCreatedTimeOffset_m,
     required this.active,
     required this.archive,
     required this.habitStartDate,
     required this.habitRemindAt,
+    this.habitLastCompletedAtDate,
   });
 
   // const Habit(this.habitName, this.habitId, this.habitNotes
@@ -60,18 +45,20 @@ class Habit {
   //     );
 
   factory Habit.fromDocument(DocumentSnapshot document) {
+    //  print(document['habitCreatedTimeOffset']);
+
     return Habit(
       habitId: document['habitId'],
       habitName: document['habitName'],
       habitNotes: document['habitNotes'],
-      habitCreatedOn: document['habitCreatedOn'],
+      habitCreatedOn: document['habitCreatedOn'].toDate(),
       habitReminderFrequency: document['habitReminderFrequency'],
-      habitLastCompletedAtDate: document['habitLastCompletedAtDate'],
-      habitCreatedTimeOffset: document['habitCreatedTimeOffset'],
+      habitCreatedTimeOffset_n: document['habitCreatedTimeOffset_n'],
+      habitCreatedTimeOffset_m: document['habitCreatedTimeOffset_m'],
       active: document['active'],
       archive: document['archive'],
-      habitStartDate: document['habitStartDate'],
-      habitRemindAt: document['habitRemindAt'],
+      habitStartDate: document['habitStartDate'].toDate(),
+      habitRemindAt: List<String>.from(document['habitRemindAt']),
     );
   }
 }

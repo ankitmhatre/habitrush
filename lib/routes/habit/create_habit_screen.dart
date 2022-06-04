@@ -39,7 +39,12 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
   List<bool> isSelected = [true, false, false, false];
   bool isLoading = false;
   String isLoadingStatus = "Creating your customized habit";
-  List<String> iconList = ["Everyday", "Every x days", "Weekly", "Monthly"];
+  List<String> reminderTypeSelection = [
+    "Everyday",
+    "Every x days",
+    "Weekly",
+    "Monthly"
+  ];
   List<DateTime> _remindMeAtList = [DateTime.now().toUtc()];
   DateTime startDate = DateTime.now().toUtc();
   List<String> daysOFWeek = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
@@ -52,7 +57,6 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
     false,
     false
   ];
-
   List<String> daysOfMonth = [
     "1",
     "2",
@@ -125,7 +129,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
   final RoundedLoadingButtonController _btnController1 =
       RoundedLoadingButtonController();
 
-  void _doSomething(RoundedLoadingButtonController controller) async {
+  void createOrUpdateHabit(RoundedLoadingButtonController controller) async {
     setState(() {
       isLoadingStatus = "Creating your customized habit";
       isLoading = true;
@@ -139,10 +143,10 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
     //var addHabitsReponse = await habits.add({});
     var reminderFrequencyDays = [];
     if (isSelected.indexOf(true) == 0) {
-      reminderFrequencyDays = [1];
+      reminderFrequencyDays = ["1"];
     } else if (isSelected.indexOf(true) == 1) {
       print(everyXDaysTextController.text);
-      reminderFrequencyDays = [int.parse(everyXDaysTextController.text)];
+      reminderFrequencyDays = [everyXDaysTextController.text];
     } else if (isSelected.indexOf(true) == 2) {
       reminderFrequencyDays = daysOFWeek
           .where((day) => (selectedDaysOfWeek[daysOFWeek.indexOf(day)]))
@@ -155,25 +159,17 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
 
     DateTime dateTime = DateTime.now();
 
-    print(dateTime.timeZoneOffset);
-    print(dateTime);
-    print(dateTime.timeZoneName);
+// Habit newHabit = new Habit(habitName: habitName, habitId: habitId, habitNotes: habitNotes, habitCreatedOn: habitCreatedOn, habitReminderFrequency: habitReminderFrequency, habitLastCompletedAtDate: habitLastCompletedAtDate, habitCreatedTimeOffset: habitCreatedTimeOffset, active: active, archive: archive, habitStartDate: habitStartDate, habitRemindAt: habitRemindAt)
 
-    print("_remindMeAtList ${_remindMeAtList}");
-    print("startDate ${startDate}");
-
-//habitNameTextController.text
     var newhabitDocument = {
       "habitCreatedOn": FieldValue.serverTimestamp(),
       "habitName": habitNameTextController.text,
-      "habitReminderFrequency": iconList[isSelected.indexOf(true)],
-      "habitReminderFrequencyDays": reminderFrequencyDays,
+      "habitReminderFrequency": reminderTypeSelection[isSelected.indexOf(true)],
+      "habitReminderFrequencyDays": List<String>.from(reminderFrequencyDays),
       "habitNotes": notesTextController.text,
-      "habitLastCompletedAtDate": 0,
-      "habitCreatedTimeOffset": {
-        "n": dateTime.timeZoneOffset.isNegative,
-        "m": dateTime.timeZoneOffset.inMinutes,
-      },
+      // "habitLastCompletedAtDate": 0,
+      "habitCreatedTimeOffset_n": dateTime.timeZoneOffset.isNegative,
+      "habitCreatedTimeOffset_m": dateTime.timeZoneOffset.inMinutes,
       "habitRemindAt": _remindMeAtList
           .map((e) => DateFormat("HH:mm").format(e.toLocal()))
           .toList(),
@@ -181,7 +177,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
       "archive": false,
       "active": true
     };
-
+    print(newhabitDocument);
     try {
       var habitId = await habits.doc().id;
       newhabitDocument['habitId'] = habitId;
@@ -220,6 +216,10 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
     Habit specificHabit = Habit.fromDocument(specificHabitInFuture);
     print(specificHabit.habitName);
     habitNameTextController.text = specificHabit.habitName;
+
+    setState(() {
+      isLoading = false;
+    });
     return specificHabitInFuture;
   }
 
@@ -246,6 +246,10 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
         <String, dynamic>{}) as Map;
 
     if (arguments['isEdit']) {
+      setState(() {
+        isLoading = true;
+        isLoadingStatus = "Getting your habit details";
+      });
       getSpecificHabit(arguments['habitId']);
     }
 
@@ -391,7 +395,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    iconList[index],
+                                    reminderTypeSelection[index],
                                     style: TextStyle(
                                       fontWeight: FontWeight.w800,
                                       color: isSelected[index]
@@ -798,7 +802,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
                                 fontWeight: FontWeight.w800, fontSize: 18),
                           ),
                           controller: _btnController1,
-                          onPressed: () => _doSomething(_btnController1),
+                          onPressed: () => createOrUpdateHabit(_btnController1),
                         ),
                       ),
                     ],

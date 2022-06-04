@@ -14,73 +14,143 @@ import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/habit_model.dart';
+import 'models/habit_timeOffset.dart';
 import 'models/reminder_model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 2431143533606798915),
+      id: const IdUid(1, 7168569053622328939),
       name: 'Habit',
-      lastPropertyId: const IdUid(4, 6536067236502458496),
+      lastPropertyId: const IdUid(14, 8047346464701118395),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 4998524084807139285),
+            id: const IdUid(1, 579275786910221115),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 2044816295047048870),
+            id: const IdUid(2, 1596613518815161322),
+            name: 'habitReminderFrequency',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 2399718453554067486),
+            name: 'active',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 8657145126555808591),
+            name: 'archive',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 1895250824658771400),
             name: 'habitName',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 7612339781509748760),
+            id: const IdUid(7, 671858743866246466),
             name: 'habitId',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 6536067236502458496),
+            id: const IdUid(8, 3176917977734686057),
             name: 'habitNotes',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 5433975064416263663),
+            name: 'habitCreatedOn',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 1269876227718188813),
+            name: 'habitLastCompletedAtDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 8724198589453080843),
+            name: 'habitStartDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 6999900384750272116),
+            name: 'habitRemindAt',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 236610744724080530),
+            name: 'habitCreatedTimeOffset_n',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(14, 8047346464701118395),
+            name: 'habitCreatedTimeOffset_m',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
-      id: const IdUid(2, 3081932666957069253),
-      name: 'HabitReminder',
-      lastPropertyId: const IdUid(6, 8596674190385458488),
+      id: const IdUid(2, 8234885554615468762),
+      name: 'HabitOffset',
+      lastPropertyId: const IdUid(3, 5200883477286356682),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 3242665978638877472),
+            id: const IdUid(1, 1658586520984599052),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 4850334236734039620),
+            id: const IdUid(2, 2233785953956261350),
+            name: 'n',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 5200883477286356682),
+            name: 'm',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(3, 502908500851704042),
+      name: 'HabitReminder',
+      lastPropertyId: const IdUid(6, 6656297347713703901),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 4300730249659865598),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 1351154188294499511),
             name: 'createdAt',
             type: 10,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 6568354922546627935),
+            id: const IdUid(3, 5575309951167831137),
             name: 'habitId',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 9189416969446763635),
+            id: const IdUid(4, 5443093943688933267),
             name: 'habitName',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 8710937860068884028),
+            id: const IdUid(5, 5252329412977970559),
             name: 'completeStatus',
             type: 1,
             flags: 0),
         ModelProperty(
-            id: const IdUid(6, 8596674190385458488),
+            id: const IdUid(6, 6656297347713703901),
             name: 'remindAtInLocalTime',
             type: 10,
             flags: 0)
@@ -109,14 +179,14 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(2, 3081932666957069253),
+      lastEntityId: const IdUid(3, 502908500851704042),
       lastIndexId: const IdUid(0, 0),
-      lastRelationId: const IdUid(0, 0),
+      lastRelationId: const IdUid(1, 2223737990890060796),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
-      retiredRelationUids: const [],
+      retiredPropertyUids: const [6898208339767082867],
+      retiredRelationUids: const [2223737990890060796],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
@@ -131,14 +201,75 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (Habit object, fb.Builder fbb) {
+          final habitReminderFrequencyOffset =
+              fbb.writeString(object.habitReminderFrequency);
           final habitNameOffset = fbb.writeString(object.habitName);
           final habitIdOffset = fbb.writeString(object.habitId);
           final habitNotesOffset = fbb.writeString(object.habitNotes);
-          fbb.startTable(5);
+          final habitRemindAtOffset = fbb.writeList(object.habitRemindAt
+              .map(fbb.writeString)
+              .toList(growable: false));
+          fbb.startTable(15);
           fbb.addInt64(0, object.id);
-          fbb.addOffset(1, habitNameOffset);
-          fbb.addOffset(2, habitIdOffset);
-          fbb.addOffset(3, habitNotesOffset);
+          fbb.addOffset(1, habitReminderFrequencyOffset);
+          fbb.addBool(2, object.active);
+          fbb.addBool(3, object.archive);
+          fbb.addOffset(5, habitNameOffset);
+          fbb.addOffset(6, habitIdOffset);
+          fbb.addOffset(7, habitNotesOffset);
+          fbb.addInt64(8, object.habitCreatedOn.millisecondsSinceEpoch);
+          fbb.addInt64(
+              9, object.habitLastCompletedAtDate?.millisecondsSinceEpoch);
+          fbb.addInt64(10, object.habitStartDate.millisecondsSinceEpoch);
+          fbb.addOffset(11, habitRemindAtOffset);
+          fbb.addBool(12, object.habitCreatedTimeOffset_n);
+          fbb.addInt64(13, object.habitCreatedTimeOffset_m);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final habitLastCompletedAtDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 22);
+          final object = Habit(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              habitName: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              habitId: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, ''),
+              habitNotes: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 18, ''),
+              habitCreatedOn: DateTime.fromMillisecondsSinceEpoch(
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0)),
+              habitReminderFrequency:
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, ''),
+              habitCreatedTimeOffset_n: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 28, false),
+              habitCreatedTimeOffset_m:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0),
+              active: const fb.BoolReader().vTableGet(buffer, rootOffset, 8, false),
+              archive: const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false),
+              habitStartDate: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0)),
+              habitRemindAt: const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false).vTableGet(buffer, rootOffset, 26, []),
+              habitLastCompletedAtDate: habitLastCompletedAtDateValue == null ? null : DateTime.fromMillisecondsSinceEpoch(habitLastCompletedAtDateValue));
+
+          return object;
+        }),
+    HabitOffset: EntityDefinition<HabitOffset>(
+        model: _entities[1],
+        toOneRelations: (HabitOffset object) => [],
+        toManyRelations: (HabitOffset object) => {},
+        getId: (HabitOffset object) => object.id,
+        setId: (HabitOffset object, int id) {
+          object.id = id;
+        },
+        objectToFB: (HabitOffset object, fb.Builder fbb) {
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addBool(1, object.n);
+          fbb.addInt64(2, object.m);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -146,19 +277,15 @@ ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
-          final object = Habit(
+          final object = HabitOffset(
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              habitName: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              habitId: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
-              habitNotes: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''));
+              n: const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false),
+              m: const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
 
           return object;
         }),
     HabitReminder: EntityDefinition<HabitReminder>(
-        model: _entities[1],
+        model: _entities[2],
         toOneRelations: (HabitReminder object) => [],
         toManyRelations: (HabitReminder object) => {},
         getId: (HabitReminder object) => object.id,
@@ -207,41 +334,91 @@ class Habit_ {
   /// see [Habit.id]
   static final id = QueryIntegerProperty<Habit>(_entities[0].properties[0]);
 
-  /// see [Habit.habitName]
-  static final habitName =
+  /// see [Habit.habitReminderFrequency]
+  static final habitReminderFrequency =
       QueryStringProperty<Habit>(_entities[0].properties[1]);
 
+  /// see [Habit.active]
+  static final active = QueryBooleanProperty<Habit>(_entities[0].properties[2]);
+
+  /// see [Habit.archive]
+  static final archive =
+      QueryBooleanProperty<Habit>(_entities[0].properties[3]);
+
+  /// see [Habit.habitName]
+  static final habitName =
+      QueryStringProperty<Habit>(_entities[0].properties[4]);
+
   /// see [Habit.habitId]
-  static final habitId = QueryStringProperty<Habit>(_entities[0].properties[2]);
+  static final habitId = QueryStringProperty<Habit>(_entities[0].properties[5]);
 
   /// see [Habit.habitNotes]
   static final habitNotes =
-      QueryStringProperty<Habit>(_entities[0].properties[3]);
+      QueryStringProperty<Habit>(_entities[0].properties[6]);
+
+  /// see [Habit.habitCreatedOn]
+  static final habitCreatedOn =
+      QueryIntegerProperty<Habit>(_entities[0].properties[7]);
+
+  /// see [Habit.habitLastCompletedAtDate]
+  static final habitLastCompletedAtDate =
+      QueryIntegerProperty<Habit>(_entities[0].properties[8]);
+
+  /// see [Habit.habitStartDate]
+  static final habitStartDate =
+      QueryIntegerProperty<Habit>(_entities[0].properties[9]);
+
+  /// see [Habit.habitRemindAt]
+  static final habitRemindAt =
+      QueryStringVectorProperty<Habit>(_entities[0].properties[10]);
+
+  /// see [Habit.habitCreatedTimeOffset_n]
+  static final habitCreatedTimeOffset_n =
+      QueryBooleanProperty<Habit>(_entities[0].properties[11]);
+
+  /// see [Habit.habitCreatedTimeOffset_m]
+  static final habitCreatedTimeOffset_m =
+      QueryIntegerProperty<Habit>(_entities[0].properties[12]);
+}
+
+/// [HabitOffset] entity fields to define ObjectBox queries.
+class HabitOffset_ {
+  /// see [HabitOffset.id]
+  static final id =
+      QueryIntegerProperty<HabitOffset>(_entities[1].properties[0]);
+
+  /// see [HabitOffset.n]
+  static final n =
+      QueryBooleanProperty<HabitOffset>(_entities[1].properties[1]);
+
+  /// see [HabitOffset.m]
+  static final m =
+      QueryIntegerProperty<HabitOffset>(_entities[1].properties[2]);
 }
 
 /// [HabitReminder] entity fields to define ObjectBox queries.
 class HabitReminder_ {
   /// see [HabitReminder.id]
   static final id =
-      QueryIntegerProperty<HabitReminder>(_entities[1].properties[0]);
+      QueryIntegerProperty<HabitReminder>(_entities[2].properties[0]);
 
   /// see [HabitReminder.createdAt]
   static final createdAt =
-      QueryIntegerProperty<HabitReminder>(_entities[1].properties[1]);
+      QueryIntegerProperty<HabitReminder>(_entities[2].properties[1]);
 
   /// see [HabitReminder.habitId]
   static final habitId =
-      QueryStringProperty<HabitReminder>(_entities[1].properties[2]);
+      QueryStringProperty<HabitReminder>(_entities[2].properties[2]);
 
   /// see [HabitReminder.habitName]
   static final habitName =
-      QueryStringProperty<HabitReminder>(_entities[1].properties[3]);
+      QueryStringProperty<HabitReminder>(_entities[2].properties[3]);
 
   /// see [HabitReminder.completeStatus]
   static final completeStatus =
-      QueryBooleanProperty<HabitReminder>(_entities[1].properties[4]);
+      QueryBooleanProperty<HabitReminder>(_entities[2].properties[4]);
 
   /// see [HabitReminder.remindAtInLocalTime]
   static final remindAtInLocalTime =
-      QueryIntegerProperty<HabitReminder>(_entities[1].properties[5]);
+      QueryIntegerProperty<HabitReminder>(_entities[2].properties[5]);
 }
