@@ -12,6 +12,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:habitrush/components/custom_card_componet.dart';
 import 'package:habitrush/components/grayed_form_button.dart';
 import 'package:habitrush/components/text_input.dart';
+import 'package:habitrush/models/habit_model.dart';
 
 import 'package:habitrush/routes/home_screen.dart';
 import 'package:habitrush/utilities/colors.dart';
@@ -177,7 +178,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
           .map((e) => DateFormat("HH:mm").format(e.toLocal()))
           .toList(),
       "habitStartDate": startDate.toUtc(),
-      "archived": false,
+      "archive": false,
       "active": true
     };
 
@@ -210,6 +211,18 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
     }
   }
 
+  Future<DocumentSnapshot> getSpecificHabit(String habitId) async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    CollectionReference habits = FirebaseFirestore.instance
+        .collection('users/${auth.currentUser!.uid}/habits');
+
+    var specificHabitInFuture = await habits.doc(habitId).get();
+    Habit specificHabit = Habit.fromDocument(specificHabitInFuture);
+    print(specificHabit.habitName);
+    habitNameTextController.text = specificHabit.habitName;
+    return specificHabitInFuture;
+  }
+
   @override
   void initState() {
     startDateTextController.text =
@@ -229,6 +242,13 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = (ModalRoute.of(context)?.settings.arguments ??
+        <String, dynamic>{}) as Map;
+
+    if (arguments['isEdit']) {
+      getSpecificHabit(arguments['habitId']);
+    }
+
     return SafeArea(
       child: Scaffold(
         body: IgnorePointer(

@@ -51,8 +51,15 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
   Future<void> deleteHabit(String habitId) {
     CollectionReference habits = FirebaseFirestore.instance
         .collection('users/${auth.currentUser!.uid}/habits');
-
+//todo: delete all teh reminders from Object box
     return habits.doc(habitId).delete();
+  }
+
+  Future<void> archiveHabit(String habitId) {
+    CollectionReference habits = FirebaseFirestore.instance
+        .collection('users/${auth.currentUser!.uid}/habits');
+
+    return habits.doc(habitId).update({"archive": true});
   }
 
   @override
@@ -79,6 +86,12 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
                           onSelected: (int index) {
                             switch (index) {
                               case 0:
+                                Navigator.pushNamed(context, '/createHabit',
+                                    arguments: {
+                                      'isEdit': true,
+                                      'habitId': args.habitId
+                                    }).then((_) => setState(() {}));
+
                                 break;
                               case 1:
                                 Dialogs.bottomMaterialDialog(
@@ -117,6 +130,40 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
                                     ]);
                                 break;
                               case 2:
+                                Dialogs.bottomMaterialDialog(
+                                    titleStyle: TextStyle(
+                                      // color: Colors.amber[600],
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    title:
+                                        "Are you sure, that you want to archive this habit?",
+                                    context: context,
+                                    actions: [
+                                      IconsOutlineButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        text: 'No, don\'t archive',
+                                        textStyle:
+                                            TextStyle(color: Colors.grey),
+                                        iconColor: Colors.grey,
+                                      ),
+                                      IconsButton(
+                                        onPressed: () {
+                                          archiveHabit(args.habitId).then(
+                                              (value) =>
+                                                  {Navigator.pop(context)});
+                                          Navigator.pop(context);
+                                        },
+                                        text: 'Yes, Archive',
+                                        iconData: Icons.check,
+                                        color: Colors.red[300],
+                                        textStyle:
+                                            TextStyle(color: Colors.black),
+                                        iconColor: Colors.black,
+                                      ),
+                                    ]);
                                 break;
                             }
                           },
