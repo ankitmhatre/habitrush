@@ -179,7 +179,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
             .toList());
 
     try {
-      if (habit.habitId.isEmpty) {
+      if (widget.habitId.isEmpty) {
         //CREATE A NEW HABIT
 
         var habitId = await habits.doc().id;
@@ -191,7 +191,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
       } else {
         //UPDATE THE OLD HABIT
 
-        habit.habitId = habitId;
+        habit.habitId = widget.habitId;
         var habitAddResponse = await habits
             .doc(habit.habitId)
             .update(Habit.toMap(habit))
@@ -226,10 +226,31 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
 
     var specificHabitInFuture = await habits.doc(habitId).get();
     Habit specificHabit = Habit.fromDocument(specificHabitInFuture);
-    print(specificHabit.habitName);
 
     //update UI elements to this update habit
     habitNameTextController.text = specificHabit.habitName;
+    notesTextController.text = specificHabit.habitNotes;
+    startDate = specificHabit.habitStartDate.toUtc();
+    startDateTextController.text = DateFormat("MMMM dd yyy")
+        .format(specificHabit.habitStartDate.toLocal());
+
+    /**
+     * Habit habit = Habit(
+        
+        
+     
+        habitCreatedOn: dateTime.toUtc(),
+        habitReminderFrequencyDays: List<String>.from(reminderFrequencyDays),
+        habitReminderFrequency: reminderTypeSelection[isSelected.indexOf(true)],
+        habitCreatedTimeOffset_n: dateTime.timeZoneOffset.isNegative,
+        habitCreatedTimeOffset_m: dateTime.timeZoneOffset.inMinutes,
+        active: true,
+        archive: false,
+        habitStartDate: startDate.toUtc(),
+        habitRemindAt: _remindMeAtList
+            .map((e) => DateFormat("HH:mm").format(e.toLocal()))
+            .toList());
+     */
 
     setState(() {
       isLoading = false;
@@ -246,10 +267,10 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
         habitId = widget.habitId;
       });
       getSpecificHabit(widget.habitId);
+    } else {
+      startDateTextController.text =
+          DateFormat("MMMM dd yyy").format(startDate.toLocal());
     }
-
-    startDateTextController.text =
-        DateFormat("MMMM dd").format(startDate.toLocal());
 
     super.initState();
   }
@@ -720,9 +741,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
                                   DateFormat("MMMM dd yyy")
                                       .format(startDate.toLocal());
                             });
-                          },
-                              currentTime: DateTime.now(),
-                              locale: LocaleType.en);
+                          }, currentTime: startDate, locale: LocaleType.en);
                         },
                         child: Container(
                           height: AppBar().preferredSize.height,
