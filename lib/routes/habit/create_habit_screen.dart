@@ -38,7 +38,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
   final TextEditingController notesTextController = TextEditingController();
   final TextEditingController startDateTextController = TextEditingController();
 
-  List<bool> isSelected = [true, false, false, false];
+  List<bool> isSelected = [false, false, false, false];
   bool isLoading = false;
   String habitId = "";
   String isLoadingStatus = "Creating your customized habit";
@@ -48,11 +48,11 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
     "Weekly",
     "Monthly"
   ];
-  List<DateTime> _remindMeAtList = [DateTime.now().toUtc()];
+  List<DateTime> _remindMeAtList = [];
   DateTime startDate = DateTime.now().toUtc();
   List<String> daysOFWeek = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
   List<bool> selectedDaysOfWeek = [
-    true,
+    false,
     false,
     false,
     false,
@@ -94,7 +94,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
     "31"
   ];
   List<bool> selectedDaysOfMonth = [
-    true,
+    false,
     false,
     false,
     false,
@@ -128,7 +128,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
   ];
 
   int everyXDaysNumber = 1;
-
+  var reminderFrequencyDays = ["1"];
   final RoundedLoadingButtonController _btnController1 =
       RoundedLoadingButtonController();
 
@@ -144,7 +144,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
 
     // Call the user's CollectionReference to add a new user
     //var addHabitsReponse = await habits.add({});
-    var reminderFrequencyDays = [];
+
     if (isSelected.indexOf(true) == 0) {
       reminderFrequencyDays = ["1"];
     } else if (isSelected.indexOf(true) == 1) {
@@ -234,6 +234,60 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
     startDateTextController.text = DateFormat("MMMM dd yyy")
         .format(specificHabit.habitStartDate.toLocal());
 
+    setState(() {
+      isSelected[reminderTypeSelection
+          .indexOf(specificHabit.habitReminderFrequency)] = true;
+    });
+
+    switch (isSelected.indexOf(true)) {
+      case 0:
+        setState(() {
+          reminderFrequencyDays = ["1"];
+        });
+
+        break;
+      case 1:
+        setState(() {
+          reminderFrequencyDays = specificHabit.habitReminderFrequencyDays;
+        });
+        everyXDaysTextController.text =
+            specificHabit.habitReminderFrequencyDays[0];
+        break;
+      case 2:
+        specificHabit.habitReminderFrequencyDays.forEach((element) {
+          setState(() {
+            selectedDaysOfWeek[daysOFWeek.indexOf(element)] = true;
+          });
+        });
+
+        break;
+      case 3:
+        specificHabit.habitReminderFrequencyDays.forEach((element) {
+          setState(() {
+            selectedDaysOfMonth[daysOfMonth.indexOf(element)] = true;
+          });
+        });
+
+        break;
+    }
+
+    //print(specificHabit.habitReminderFrequencyDays);
+    print("---------------");
+    print("_remindMeAtList");
+    print(_remindMeAtList);
+
+    print(specificHabit.habitRemindAt);
+
+    specificHabit.habitRemindAt.forEach((element) {
+      var hm = element.split(":");
+      DateTime dateToday = DateTime(DateTime.now().year, DateTime.now().month,
+          DateTime.now().day, int.parse(hm[0]), int.parse(hm[1]));
+      setState(() {
+        _remindMeAtList.add(dateToday);
+      });
+    });
+
+    print("---------------");
     /**
      * Habit habit = Habit(
         
@@ -270,6 +324,11 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
     } else {
       startDateTextController.text =
           DateFormat("MMMM dd yyy").format(startDate.toLocal());
+      setState(() {
+        isSelected[0] = true;
+
+        _remindMeAtList.add(DateTime.now().toUtc());
+      });
     }
 
     super.initState();

@@ -70,7 +70,12 @@ void main() async {
   // final id = habitReminderBox.put(person);
   // print("id $id");
 
-  FirebaseFirestore.instance.useFirestoreEmulator("192.168.1.203", 8080);
+//   FirebaseFirestore.instance.useFirestoreEmulator("10.0.2.2", 1818);
+
+// // the host computer from an Android emulator.
+//   FirebaseFirestore firestore = FirebaseFirestore.instance;
+//   firestore.useFirestoreEmulator("10.0.2.2", 1818);
+
   FirebaseMessaging.onBackgroundMessage(_messageHandler);
   FirebaseMessaging.onMessage.listen(_messageHandler);
 
