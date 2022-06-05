@@ -9,7 +9,9 @@ class Habit {
   String habitNotes;
   @Property(type: PropertyType.date)
   DateTime habitCreatedOn;
+
   String habitReminderFrequency;
+  List<String> habitReminderFrequencyDays;
   @Property(type: PropertyType.date)
   DateTime? habitLastCompletedAtDate;
   bool habitCreatedTimeOffset_n;
@@ -27,6 +29,7 @@ class Habit {
     required this.habitNotes,
     required this.habitCreatedOn,
     required this.habitReminderFrequency,
+    required this.habitReminderFrequencyDays,
     required this.habitCreatedTimeOffset_n,
     required this.habitCreatedTimeOffset_m,
     required this.active,
@@ -45,14 +48,14 @@ class Habit {
   //     );
 
   factory Habit.fromDocument(DocumentSnapshot document) {
-    //  print(document['habitCreatedTimeOffset']);
-
     return Habit(
       habitId: document['habitId'],
       habitName: document['habitName'],
       habitNotes: document['habitNotes'],
       habitCreatedOn: document['habitCreatedOn'].toDate(),
       habitReminderFrequency: document['habitReminderFrequency'],
+      habitReminderFrequencyDays:
+          List<String>.from(document['habitReminderFrequencyDays']),
       habitCreatedTimeOffset_n: document['habitCreatedTimeOffset_n'],
       habitCreatedTimeOffset_m: document['habitCreatedTimeOffset_m'],
       active: document['active'],
@@ -60,5 +63,23 @@ class Habit {
       habitStartDate: document['habitStartDate'].toDate(),
       habitRemindAt: List<String>.from(document['habitRemindAt']),
     );
+  }
+
+  static Map<String, dynamic> toMap(Habit b) {
+    return {
+      'habitId': b.habitId,
+      'habitName': b.habitName,
+      'habitNotes': b.habitNotes,
+      'habitCreatedOn': b.habitCreatedOn,
+      'habitReminderFrequency': b.habitReminderFrequency,
+      'habitReminderFrequencyDays':
+          List<String>.from(b.habitReminderFrequencyDays),
+      'habitCreatedTimeOffset_n': b.habitCreatedTimeOffset_n,
+      'habitCreatedTimeOffset_m': b.habitCreatedTimeOffset_m,
+      'active': b.active,
+      'archive': b.archive,
+      'habitStartDate': b.habitStartDate,
+      'habitRemindAt': List<String>.from(b.habitRemindAt),
+    };
   }
 }

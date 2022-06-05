@@ -22,7 +22,9 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CreateHabitPage extends StatefulWidget {
-  const CreateHabitPage({Key? key}) : super(key: key);
+  final String habitId;
+
+  const CreateHabitPage({Key? key, required this.habitId}) : super(key: key);
 
   @override
   _CreateHabitPageState createState() => _CreateHabitPageState();
@@ -38,6 +40,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
 
   List<bool> isSelected = [true, false, false, false];
   bool isLoading = false;
+  String habitId = "";
   String isLoadingStatus = "Creating your customized habit";
   List<String> reminderTypeSelection = [
     "Everyday",
@@ -159,32 +162,41 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
 
     DateTime dateTime = DateTime.now();
 
-// Habit newHabit = new Habit(habitName: habitName, habitId: habitId, habitNotes: habitNotes, habitCreatedOn: habitCreatedOn, habitReminderFrequency: habitReminderFrequency, habitLastCompletedAtDate: habitLastCompletedAtDate, habitCreatedTimeOffset: habitCreatedTimeOffset, active: active, archive: archive, habitStartDate: habitStartDate, habitRemindAt: habitRemindAt)
+    Habit habit = Habit(
+        habitName: habitNameTextController.text,
+        habitId: "",
+        habitNotes: notesTextController.text,
+        habitCreatedOn: dateTime.toUtc(),
+        habitReminderFrequencyDays: List<String>.from(reminderFrequencyDays),
+        habitReminderFrequency: reminderTypeSelection[isSelected.indexOf(true)],
+        habitCreatedTimeOffset_n: dateTime.timeZoneOffset.isNegative,
+        habitCreatedTimeOffset_m: dateTime.timeZoneOffset.inMinutes,
+        active: true,
+        archive: false,
+        habitStartDate: startDate.toUtc(),
+        habitRemindAt: _remindMeAtList
+            .map((e) => DateFormat("HH:mm").format(e.toLocal()))
+            .toList());
 
-    var newhabitDocument = {
-      "habitCreatedOn": FieldValue.serverTimestamp(),
-      "habitName": habitNameTextController.text,
-      "habitReminderFrequency": reminderTypeSelection[isSelected.indexOf(true)],
-      "habitReminderFrequencyDays": List<String>.from(reminderFrequencyDays),
-      "habitNotes": notesTextController.text,
-      // "habitLastCompletedAtDate": 0,
-      "habitCreatedTimeOffset_n": dateTime.timeZoneOffset.isNegative,
-      "habitCreatedTimeOffset_m": dateTime.timeZoneOffset.inMinutes,
-      "habitRemindAt": _remindMeAtList
-          .map((e) => DateFormat("HH:mm").format(e.toLocal()))
-          .toList(),
-      "habitStartDate": startDate.toUtc(),
-      "archive": false,
-      "active": true
-    };
-    print(newhabitDocument);
     try {
-      var habitId = await habits.doc().id;
-      newhabitDocument['habitId'] = habitId;
-      var habitAddResponse = await habits
-          .doc(habitId)
-          .set(newhabitDocument)
-          .timeout(Duration(seconds: 7));
+      if (habit.habitId.isEmpty) {
+        //CREATE A NEW HABIT
+
+        var habitId = await habits.doc().id;
+        habit.habitId = habitId;
+        var habitAddResponse = await habits
+            .doc(habitId)
+            .set(Habit.toMap(habit))
+            .timeout(Duration(seconds: 7));
+      } else {
+        //UPDATE THE OLD HABIT
+
+        habit.habitId = habitId;
+        var habitAddResponse = await habits
+            .doc(habit.habitId)
+            .update(Habit.toMap(habit))
+            .timeout(Duration(seconds: 7));
+      }
 
       controller.success();
       Timer(Duration(seconds: 2), () {
@@ -215,6 +227,8 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
     var specificHabitInFuture = await habits.doc(habitId).get();
     Habit specificHabit = Habit.fromDocument(specificHabitInFuture);
     print(specificHabit.habitName);
+
+    //update UI elements to this update habit
     habitNameTextController.text = specificHabit.habitName;
 
     setState(() {
@@ -225,9 +239,18 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
 
   @override
   void initState() {
+    if (widget.habitId.isNotEmpty) {
+      setState(() {
+        isLoading = true;
+        isLoadingStatus = "Getting your habit details";
+        habitId = widget.habitId;
+      });
+      getSpecificHabit(widget.habitId);
+    }
+
     startDateTextController.text =
         DateFormat("MMMM dd").format(startDate.toLocal());
-    habitNameTextController.text = "Test habit";
+
     super.initState();
   }
 
@@ -242,17 +265,6 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-
-    if (arguments['isEdit']) {
-      setState(() {
-        isLoading = true;
-        isLoadingStatus = "Getting your habit details";
-      });
-      getSpecificHabit(arguments['habitId']);
-    }
-
     return SafeArea(
       child: Scaffold(
         body: IgnorePointer(
@@ -297,7 +309,7 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24),
                           child: Text(
-                            "Create a new habit",
+                            "${widget.habitId.isEmpty ? "Create a new " : "Update "}habit",
                             style: TextStyle(
                                 fontWeight: FontWeight.w700, fontSize: 18),
                           ),

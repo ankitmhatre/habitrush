@@ -71,9 +71,8 @@ class _HabitsPageState extends State<HabitsPage> {
                   splashColor: rushYellow,
                   radius: 50,
                   onTap: () {
-                    Navigator.pushNamed(context, '/createHabit', arguments: {
-                      'isEdit': false,
-                    }).then((_) => setState(() {}));
+                    Navigator.pushNamed(context, '/createHabit', arguments: '')
+                        .then((_) => setState(() {}));
                   },
                   child: Center(
                     child: Padding(

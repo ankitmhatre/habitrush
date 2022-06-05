@@ -18,7 +18,8 @@ import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 
 class HabitDetailsPage extends StatefulWidget {
-  const HabitDetailsPage({Key? key}) : super(key: key);
+  final Habit habit;
+  const HabitDetailsPage({Key? key, required this.habit}) : super(key: key);
 
   @override
   _HabitDetailsPageState createState() => _HabitDetailsPageState();
@@ -64,13 +65,11 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Habit;
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
             centerTitle: true,
-            title: Text(args.habitName),
+            title: Text(widget.habit.habitName),
             elevation: 0,
             backgroundColor: Colors.transparent,
             actions: [
@@ -87,10 +86,8 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
                             switch (index) {
                               case 0:
                                 Navigator.pushNamed(context, '/createHabit',
-                                    arguments: {
-                                      'isEdit': true,
-                                      'habitId': args.habitId
-                                    }).then((_) => setState(() {}));
+                                        arguments: widget.habit.habitId)
+                                    .then((_) => setState(() {}));
 
                                 break;
                               case 1:
@@ -115,8 +112,8 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
                                       ),
                                       IconsButton(
                                         onPressed: () {
-                                          deleteHabit(args.habitId).then(
-                                              (value) =>
+                                          deleteHabit(widget.habit.habitId)
+                                              .then((value) =>
                                                   {Navigator.pop(context)});
                                           Navigator.pop(context);
                                         },
@@ -151,8 +148,8 @@ class _HabitDetailsPageState extends State<HabitDetailsPage> {
                                       ),
                                       IconsButton(
                                         onPressed: () {
-                                          archiveHabit(args.habitId).then(
-                                              (value) =>
+                                          archiveHabit(widget.habit.habitId)
+                                              .then((value) =>
                                                   {Navigator.pop(context)});
                                           Navigator.pop(context);
                                         },

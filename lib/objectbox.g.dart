@@ -23,7 +23,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(1, 7168569053622328939),
       name: 'Habit',
-      lastPropertyId: const IdUid(14, 8047346464701118395),
+      lastPropertyId: const IdUid(15, 6843385132979786806),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -90,6 +90,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(14, 8047346464701118395),
             name: 'habitCreatedTimeOffset_m',
             type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(15, 6843385132979786806),
+            name: 'habitReminderFrequencyDays',
+            type: 30,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -209,7 +214,11 @@ ModelDefinition getObjectBoxModel() {
           final habitRemindAtOffset = fbb.writeList(object.habitRemindAt
               .map(fbb.writeString)
               .toList(growable: false));
-          fbb.startTable(15);
+          final habitReminderFrequencyDaysOffset = fbb.writeList(object
+              .habitReminderFrequencyDays
+              .map(fbb.writeString)
+              .toList(growable: false));
+          fbb.startTable(16);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, habitReminderFrequencyOffset);
           fbb.addBool(2, object.active);
@@ -224,6 +233,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(11, habitRemindAtOffset);
           fbb.addBool(12, object.habitCreatedTimeOffset_n);
           fbb.addInt64(13, object.habitCreatedTimeOffset_m);
+          fbb.addOffset(14, habitReminderFrequencyDaysOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -245,10 +255,12 @@ ModelDefinition getObjectBoxModel() {
               habitReminderFrequency:
                   const fb.StringReader(asciiOptimization: true)
                       .vTableGet(buffer, rootOffset, 6, ''),
-              habitCreatedTimeOffset_n: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 28, false),
-              habitCreatedTimeOffset_m:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0),
+              habitReminderFrequencyDays:
+                  const fb.ListReader<String>(fb.StringReader(asciiOptimization: true), lazy: false)
+                      .vTableGet(buffer, rootOffset, 32, []),
+              habitCreatedTimeOffset_n:
+                  const fb.BoolReader().vTableGet(buffer, rootOffset, 28, false),
+              habitCreatedTimeOffset_m: const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0),
               active: const fb.BoolReader().vTableGet(buffer, rootOffset, 8, false),
               archive: const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false),
               habitStartDate: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0)),
@@ -379,6 +391,10 @@ class Habit_ {
   /// see [Habit.habitCreatedTimeOffset_m]
   static final habitCreatedTimeOffset_m =
       QueryIntegerProperty<Habit>(_entities[0].properties[12]);
+
+  /// see [Habit.habitReminderFrequencyDays]
+  static final habitReminderFrequencyDays =
+      QueryStringVectorProperty<Habit>(_entities[0].properties[13]);
 }
 
 /// [HabitOffset] entity fields to define ObjectBox queries.

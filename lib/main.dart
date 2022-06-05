@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:habitrush/models/habit_model.dart';
 import 'package:habitrush/models/reminder_model.dart';
 import 'package:habitrush/objectbox.g.dart';
 
@@ -106,16 +107,76 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: '/splash',
-      routes: {
-        '/splash': (context) => const SplashPage(),
-        '/login': (context) => const LoginPage(),
-        '/home': (context) => const HomePage(),
-        '/profile': (context) => const ProfilePage(),
-        '/purchases': (context) => const PurchasesPage(),
-        '/invite': (context) => const InvitePage(),
-        '/createHabit': (context) => const CreateHabitPage(),
-        '/challenges': (context) => const CompletedChallengesPage(),
-        '/habitDetails': (context) => const HabitDetailsPage(),
+      onGenerateRoute: (RouteSettings settings) {
+        switch (settings.name) {
+          case '/createHabit':
+            return MaterialPageRoute(
+              builder: (context) =>
+                  CreateHabitPage(habitId: settings.arguments.toString()),
+            );
+
+          case '/':
+          case '/splash':
+            return MaterialPageRoute(
+              builder: (context) => const SplashPage(),
+            );
+
+          case '/login':
+            return MaterialPageRoute(
+              builder: (context) => const LoginPage(),
+            );
+
+          case '/home':
+            return MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            );
+
+          case '/profile':
+            return MaterialPageRoute(
+              builder: (context) => const ProfilePage(),
+            );
+
+          case '/purchases':
+            return MaterialPageRoute(
+              builder: (context) => const PurchasesPage(),
+            );
+
+          case '/invite':
+            return MaterialPageRoute(
+              builder: (context) => const InvitePage(),
+            );
+
+          case '/challenges':
+            return MaterialPageRoute(
+              builder: (context) => const CompletedChallengesPage(),
+            );
+
+          case '/habitDetails':
+            var habit = settings.arguments as Habit;
+            return MaterialPageRoute(
+              builder: (context) => HabitDetailsPage(habit: habit),
+            );
+
+          case '/invite':
+            return MaterialPageRoute(
+              builder: (context) => const InvitePage(),
+            );
+
+          case '/invite':
+            return MaterialPageRoute(
+              builder: (context) => const InvitePage(),
+            );
+
+          case '/invite':
+            return MaterialPageRoute(
+              builder: (context) => const InvitePage(),
+            );
+
+          default:
+            return MaterialPageRoute(
+              builder: (context) => const SplashPage(),
+            );
+        }
       },
       theme: ThemeData(
           // This is the theme of your application.
