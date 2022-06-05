@@ -1,0 +1,164 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:7168569053622328939",
+      "lastPropertyId": "15:6843385132979786806",
+      "name": "Habit",
+      "properties": [
+        {
+          "id": "1:579275786910221115",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1596613518815161322",
+          "name": "habitReminderFrequency",
+          "type": 9
+        },
+        {
+          "id": "3:2399718453554067486",
+          "name": "active",
+          "type": 1
+        },
+        {
+          "id": "4:8657145126555808591",
+          "name": "archive",
+          "type": 1
+        },
+        {
+          "id": "6:1895250824658771400",
+          "name": "habitName",
+          "type": 9
+        },
+        {
+          "id": "7:671858743866246466",
+          "name": "habitId",
+          "type": 9
+        },
+        {
+          "id": "8:3176917977734686057",
+          "name": "habitNotes",
+          "type": 9
+        },
+        {
+          "id": "9:5433975064416263663",
+          "name": "habitCreatedOn",
+          "type": 10
+        },
+        {
+          "id": "10:1269876227718188813",
+          "name": "habitLastCompletedAtDate",
+          "type": 10
+        },
+        {
+          "id": "11:8724198589453080843",
+          "name": "habitStartDate",
+          "type": 10
+        },
+        {
+          "id": "12:6999900384750272116",
+          "name": "habitRemindAt",
+          "type": 30
+        },
+        {
+          "id": "13:236610744724080530",
+          "name": "habitCreatedTimeOffset_n",
+          "type": 1
+        },
+        {
+          "id": "14:8047346464701118395",
+          "name": "habitCreatedTimeOffset_m",
+          "type": 6
+        },
+        {
+          "id": "15:6843385132979786806",
+          "name": "habitReminderFrequencyDays",
+          "type": 30
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:8234885554615468762",
+      "lastPropertyId": "3:5200883477286356682",
+      "name": "HabitOffset",
+      "properties": [
+        {
+          "id": "1:1658586520984599052",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2233785953956261350",
+          "name": "n",
+          "type": 1
+        },
+        {
+          "id": "3:5200883477286356682",
+          "name": "m",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:502908500851704042",
+      "lastPropertyId": "6:6656297347713703901",
+      "name": "HabitReminder",
+      "properties": [
+        {
+          "id": "1:4300730249659865598",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1351154188294499511",
+          "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "3:5575309951167831137",
+          "name": "habitId",
+          "type": 9
+        },
+        {
+          "id": "4:5443093943688933267",
+          "name": "habitName",
+          "type": 9
+        },
+        {
+          "id": "5:5252329412977970559",
+          "name": "completeStatus",
+          "type": 1
+        },
+        {
+          "id": "6:6656297347713703901",
+          "name": "remindAtInLocalTime",
+          "type": 10
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "3:502908500851704042",
+  "lastIndexId": "0:0",
+  "lastRelationId": "1:2223737990890060796",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    6898208339767082867
+  ],
+  "retiredRelationUids": [
+    2223737990890060796
+  ],
+  "version": 1
+}
