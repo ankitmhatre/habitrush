@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.habitrush">
+>
    <application
         android:label="habitrush"
         android:name="${applicationName}"

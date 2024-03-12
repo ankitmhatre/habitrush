@@ -7,7 +7,6 @@ import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:habitrush/components/custom_card_componet.dart';
 import 'package:habitrush/components/grayed_form_button.dart';
@@ -713,22 +712,22 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
 
                       InkWell(
                         onTap: () {
-                          DatePicker.showTime12hPicker(context,
-                              theme: const DatePickerTheme(
-                                headerColor: rushYellow,
-                                backgroundColor: rushYellow,
-                                itemStyle: TextStyle(
-                                    color: black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18),
-                                doneStyle:
-                                    TextStyle(color: black, fontSize: 16),
-                              ),
-                              showTitleActions: true, onConfirm: (date) {
-                            setState(() {
-                              _remindMeAtList.add(date.toUtc());
-                            });
-                          }, currentTime: DateTime.now());
+                          // DatePicker.showTime12hPicker(context,
+                          //     theme: const DatePickerTheme(
+                          //       headerColor: rushYellow,
+                          //       backgroundColor: rushYellow,
+                          //       itemStyle: TextStyle(
+                          //           color: black,
+                          //           fontWeight: FontWeight.bold,
+                          //           fontSize: 18),
+                          //       doneStyle:
+                          //           TextStyle(color: black, fontSize: 16),
+                          //     ),
+                          //     showTitleActions: true, onConfirm: (date) {
+                          //   setState(() {
+                          //     _remindMeAtList.add(date.toUtc());
+                          //   });
+                          // }, currentTime: DateTime.now());
 
                           // setState(() {});
                         },
@@ -778,29 +777,29 @@ class _CreateHabitPageState extends State<CreateHabitPage> {
 
                       GestureDetector(
                         onTap: () {
-                          DatePicker.showDatePicker(context,
-                              showTitleActions: true,
-                              minTime: DateTime.now(),
-                              theme: const DatePickerTheme(
-                                  headerColor: rushYellow,
-                                  backgroundColor: rushYellow,
-                                  itemStyle: TextStyle(
-                                      color: black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                  doneStyle:
-                                      TextStyle(color: black, fontSize: 16)),
-                              onChanged: (date) {
-                            print('change $date in time zone ' +
-                                date.timeZoneOffset.inHours.toString());
-                          }, onConfirm: (date) {
-                            setState(() {
-                              startDate = date.toUtc();
-                              startDateTextController.text =
-                                  DateFormat("MMMM dd yyy")
-                                      .format(startDate.toLocal());
-                            });
-                          }, currentTime: startDate, locale: LocaleType.en);
+                          // DatePicker.showDatePicker(context,
+                          //     showTitleActions: true,
+                          //     minTime: DateTime.now(),
+                          //     theme: const DatePickerTheme(
+                          //         headerColor: rushYellow,
+                          //         backgroundColor: rushYellow,
+                          //         itemStyle: TextStyle(
+                          //             color: black,
+                          //             fontWeight: FontWeight.bold,
+                          //             fontSize: 18),
+                          //         doneStyle:
+                          //             TextStyle(color: black, fontSize: 16)),
+                          //     onChanged: (date) {
+                          //   print('change $date in time zone ' +
+                          //       date.timeZoneOffset.inHours.toString());
+                          // }, onConfirm: (date) {
+                          //   setState(() {
+                          //     startDate = date.toUtc();
+                          //     startDateTextController.text =
+                          //         DateFormat("MMMM dd yyy")
+                          //             .format(startDate.toLocal());
+                          //   });
+                          // }, currentTime: startDate, locale: LocaleType.en);
                         },
                         child: Container(
                           height: AppBar().preferredSize.height,

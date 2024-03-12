@@ -107,6 +107,7 @@ class _HabitsPageState extends State<HabitsPage> {
                           margin: EdgeInsets.symmetric(
                               horizontal: 18, vertical: 12),
                           child: Container(
+                            color: Colors.teal,
                             height: 96,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -132,7 +133,9 @@ class _HabitsPageState extends State<HabitsPage> {
                                           children: [
                                             Text(
                                               snapshot.data![index].habitName,
+
                                               style: const TextStyle(
+                                                color: Colors.black87,
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 18),
                                             ),
